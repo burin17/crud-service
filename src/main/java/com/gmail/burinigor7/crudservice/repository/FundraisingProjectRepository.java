@@ -31,4 +31,12 @@ public interface FundraisingProjectRepository extends JpaRepository<FundraisingP
             "WHERE status = 'IN_PROGRESS' " +
             "OR status = 'FINANCED'")
     List<FundraisingProject> getFundraisingProjectsVisibleForUser();
+
+    @Query(nativeQuery = true,
+        value = "select fp.* " +
+                "from fundraising_project fp " +
+                "inner join investments i " +
+                "on fp.fundraising_project_id = i.fundraising_project " +
+                "where i.investor = :investor ")
+    List<FundraisingProject> getInvested(@Param("investor") Long id);
 }

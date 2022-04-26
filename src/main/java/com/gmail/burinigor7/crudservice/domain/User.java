@@ -31,8 +31,6 @@ public class User {
     @OneToMany(mappedBy = "fundraisingProject")
     @JsonIgnore
     private List<Investment> investments;
-    @Column(name = "wallet_name", nullable = false)
-    private String walletName;
     @Enumerated(EnumType.STRING)
     private Role role;
     @ManyToMany(mappedBy = "approvers")
@@ -126,13 +124,5 @@ public class User {
 
     public void setFundraisingProjects(List<FundraisingProject> fundraisingProjects) {
         this.fundraisingProjects = fundraisingProjects;
-    }
-
-    public String getWalletName() {
-        return walletName;
-    }
-
-    public void setWalletName(String addressKey) {
-        this.walletName = addressKey;
     }
 }

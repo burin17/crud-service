@@ -58,4 +58,9 @@ public class FundraisingProjectController {
     public List<FundraisingProject> all() {
         return fundraisingProjectService.all();
     }
+
+    @GetMapping("/invested")
+    public List<FundraisingProject> invested(@RequestParam Long investor) {
+        return fundraisingProjectService.invested(investor);
+    }
 }

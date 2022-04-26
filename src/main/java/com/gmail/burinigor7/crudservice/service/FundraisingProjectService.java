@@ -58,4 +58,8 @@ public class FundraisingProjectService {
     public List<FundraisingProject> fundraisingProjectsVisibleForUser() {
         return fundraisingProjectRepository.getFundraisingProjectsVisibleForUser();
     }
+
+    public List<FundraisingProject> invested(Long investor) {
+        return fundraisingProjectRepository.getInvested(investor);
+    }
 }
