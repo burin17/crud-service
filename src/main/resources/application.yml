@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: crud-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/concept_funder
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    show-sql: true
+#    hibernate:
+#      ddl-auto: create
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:18761/eureka/
+    fetch-registry: true
+    registerWithEureka: true
+  instance:
+    preferIpAddress: true
+server:
+  port: 19080

@@ -1,5 +1,8 @@
 package com.gmail.burinigor7.crudservice.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -16,10 +19,50 @@ public class User {
     private String lastName;
     @Column(name = "patronymic", nullable = true)
     private String patronymic;
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
+    @Column(name = "username", nullable = false, unique = true)
+    private String username;
+    @Column(name = "encr_pass", nullable = false)
+    private String password;
     @OneToMany(mappedBy = "founder")
+    @JsonIgnore
     private List<FundraisingProject> fundraisingProjects;
+    @OneToMany(mappedBy = "fundraisingProject")
+    @JsonIgnore
+    private List<Investment> investments;
+    @Column(name = "wallet_name", nullable = false)
+    private String walletName;
+    @Enumerated(EnumType.STRING)
+    private Role role;
+    @ManyToMany(mappedBy = "approvers")
+    @JsonIgnore
+    private List<PayoutRequest> approvedPayoutRequest;
+
+    public List<PayoutRequest> getApprovedPayoutRequest() {
+        return approvedPayoutRequest;
+    }
+
+    public void setApprovedPayoutRequest(List<PayoutRequest> approvedPayoutRequest) {
+        this.approvedPayoutRequest = approvedPayoutRequest;
+    }
+
+    public List<Investment> getInvestments() {
+        return investments;
+    }
+
+    public void setInvestments(List<Investment> investments) {
+        this.investments = investments;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
 
     public Long getId() {
         return id;
@@ -59,5 +102,37 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String encryptedPassword) {
+        this.password = encryptedPassword;
+    }
+
+    public List<FundraisingProject> getFundraisingProjects() {
+        return fundraisingProjects;
+    }
+
+    public void setFundraisingProjects(List<FundraisingProject> fundraisingProjects) {
+        this.fundraisingProjects = fundraisingProjects;
+    }
+
+    public String getWalletName() {
+        return walletName;
+    }
+
+    public void setWalletName(String addressKey) {
+        this.walletName = addressKey;
     }
 }
