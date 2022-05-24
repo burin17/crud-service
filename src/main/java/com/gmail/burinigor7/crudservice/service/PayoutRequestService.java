@@ -9,7 +9,9 @@ import com.gmail.burinigor7.crudservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -17,14 +19,17 @@ public class PayoutRequestService {
     private final PayoutRequestRepository payoutRequestRepository;
     private final FundraisingProjectRepository fundraisingProjectRepository;
     private final UserRepository userRepository;
+    private final FileStorageService fileStorageService;
 
     @Autowired
     public PayoutRequestService(PayoutRequestRepository payoutRequestRepository,
                                 FundraisingProjectRepository fundraisingProjectRepository,
-                                UserRepository userRepository) {
+                                UserRepository userRepository,
+                                FileStorageService fileStorageService) {
         this.payoutRequestRepository = payoutRequestRepository;
         this.fundraisingProjectRepository = fundraisingProjectRepository;
         this.userRepository = userRepository;
+        this.fileStorageService = fileStorageService;
     }
 
     public PayoutRequest create(PayoutRequest payoutRequest) {
@@ -40,13 +45,22 @@ public class PayoutRequestService {
         return payoutRequestRepository.findById(id).get();
     }
 
-    public PayoutRequest approve(Long userId, Long prId, Long countOfApproves) {
+    public PayoutRequest approve(Long userId, Long prId, Integer countOfApproves) {
         PayoutRequest payoutRequest = payoutRequestRepository.findById(prId).get();
         User user = userRepository.findById(userId).get();
         List<User> approvers = payoutRequest.getApprovers();
         approvers.add(user);
         payoutRequest.setApprovers(approvers);
         payoutRequest.setCountOfApproves(countOfApproves);
+        return payoutRequestRepository.save(payoutRequest);
+    }
+
+    public PayoutRequest addReport(Long payoutReqId, String notes, MultipartFile[] files) {
+        if (files != null) {
+            Arrays.stream(files).forEach(file -> fileStorageService.saveReportFile(file, payoutReqId));
+        }
+        PayoutRequest payoutRequest = payoutRequestRepository.findById(payoutReqId).get();
+        payoutRequest.setReportNotes(notes);
         return payoutRequestRepository.save(payoutRequest);
     }
 }

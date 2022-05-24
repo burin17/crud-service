@@ -17,7 +17,8 @@ public interface FundraisingProjectRepository extends JpaRepository<FundraisingP
 
     @Query(value = "select * " +
             "from fundraising_project f " +
-            "where lower(f.title) like lower(concat(:title, '%')) ",
+            "where lower(f.title) like lower(concat('%', :title, '%')) " +
+            "and (status = 'IN_PROGRESS' or status = 'FINANCED')",
            nativeQuery = true)
     List<FundraisingProject> getFundraisingProjectsByTitlePiece(@Param("title") String title);
 
@@ -39,4 +40,15 @@ public interface FundraisingProjectRepository extends JpaRepository<FundraisingP
                 "on fp.fundraising_project_id = i.fundraising_project " +
                 "where i.investor = :investor ")
     List<FundraisingProject> getInvested(@Param("investor") Long id);
+
+    List<FundraisingProject> findAllByStatus(FundraisingProjectStatus status);
+
+    @Query(nativeQuery = true,
+            value = """
+                select tags from fundraising_project_tags
+                inner join fundraising_project fp
+                on fp.fundraising_project_id = fundraising_project_tags.fundraising_project_fundraising_project_id
+                where fp.fundraising_project_id = :id
+            """)
+    List<String> getFundraisingProjectTags(@Param("id") Long id);
 }

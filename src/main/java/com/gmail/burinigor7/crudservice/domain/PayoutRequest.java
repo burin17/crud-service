@@ -13,9 +13,9 @@ public class PayoutRequest {
     private Long id;
     @Column(name = "eth_amount", nullable = false)
     private Float ethAmount;
-    @Column(name = "intention", nullable = false)
+    @Column(name = "intention", nullable = false, columnDefinition = "text")
     private String intention;
-    @Column(name = "reporting", nullable = false)
+    @Column(name = "reporting", nullable = false, columnDefinition = "text")
     private String reporting;
     @Column(name = "achieve_by", nullable = false)
     private Date achieveBy;
@@ -36,13 +36,24 @@ public class PayoutRequest {
     private String requestIdx;
 
     @Column(name = "count_of_approves")
-    private Long countOfApproves;
+    private Integer countOfApproves;
 
-    public Long getCountOfApproves() {
+    @Column(name = "report_notes", nullable = true, columnDefinition = "text")
+    private String reportNotes;
+
+    public String getReportNotes() {
+        return reportNotes;
+    }
+
+    public void setReportNotes(String reportNotes) {
+        this.reportNotes = reportNotes;
+    }
+
+    public Integer getCountOfApproves() {
         return countOfApproves;
     }
 
-    public void setCountOfApproves(Long countOfApproves) {
+    public void setCountOfApproves(Integer countOfApproves) {
         this.countOfApproves = countOfApproves;
     }
 

@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -43,5 +44,9 @@ public class UserService {
             errMap.put("email", "Specified email is already in use");
         }
         return errMap;
+    }
+
+    public List<User> findByPieceOfUsername(String usernamePiece) {
+        return userRepository.getByUsernamePiece(usernamePiece);
     }
 }

@@ -6,7 +6,6 @@ public enum FundraisingProjectStatus {
     REJECTED,
     IN_PROGRESS,
     FINANCED,
-    UNSUCCESSFULLY_FINISHED,
     BLOCKED,
     EXPIRED
 }

@@ -36,6 +36,15 @@ public class User {
     @ManyToMany(mappedBy = "approvers")
     @JsonIgnore
     private List<PayoutRequest> approvedPayoutRequest;
+    @OneToMany(mappedBy = "startedBy")
+    @JsonIgnore
+    private List<Chat> startedChats;
+    @OneToMany(mappedBy = "techSpecialist")
+    @JsonIgnore
+    private List<Chat> helpChats;
+    @OneToMany(mappedBy = "author")
+    @JsonIgnore
+    private List<Message> typedMessages;
 
     public List<PayoutRequest> getApprovedPayoutRequest() {
         return approvedPayoutRequest;
@@ -124,5 +133,29 @@ public class User {
 
     public void setFundraisingProjects(List<FundraisingProject> fundraisingProjects) {
         this.fundraisingProjects = fundraisingProjects;
+    }
+
+    public List<Chat> getStartedChats() {
+        return startedChats;
+    }
+
+    public void setStartedChats(List<Chat> startedChats) {
+        this.startedChats = startedChats;
+    }
+
+    public List<Chat> getHelpChats() {
+        return helpChats;
+    }
+
+    public void setHelpChats(List<Chat> helpChats) {
+        this.helpChats = helpChats;
+    }
+
+    public List<Message> getTypedMessages() {
+        return typedMessages;
+    }
+
+    public void setTypedMessages(List<Message> typedMessages) {
+        this.typedMessages = typedMessages;
     }
 }

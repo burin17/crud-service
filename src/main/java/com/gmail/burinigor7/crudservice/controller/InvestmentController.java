@@ -26,4 +26,9 @@ public class InvestmentController {
     public List<Investment> getInvestments(@RequestParam Long fpId) {
         return investmentService.investmentsForFundraisingProject(fpId);
     }
+
+    @GetMapping ("/user/{userId}")
+    List<Investment> getInvestmentsForUser(@PathVariable Long userId) {
+        return investmentService.getInvestmentsForUser(userId);
+    }
 }

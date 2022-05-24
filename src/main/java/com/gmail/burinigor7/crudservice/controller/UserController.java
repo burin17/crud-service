@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -36,5 +37,10 @@ public class UserController {
     @PostMapping("/validate")
     public Map<String, String> validate(@RequestBody User registrationForm) {
         return userService.validate(registrationForm);
+    }
+
+    @GetMapping("/piece")
+    public List<User> usersByPieceOfUsername(@RequestParam String usernamePiece) {
+        return userService.findByPieceOfUsername(usernamePiece);
     }
 }

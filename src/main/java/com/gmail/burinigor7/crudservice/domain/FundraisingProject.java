@@ -34,7 +34,7 @@ public class FundraisingProject {
     @Column(name = "status", nullable = false)
     private FundraisingProjectStatus status;
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", nullable = false, columnDefinition = "text")
     private String description;
 
     @Column(name = "duration", nullable = true)
@@ -51,6 +51,60 @@ public class FundraisingProject {
 
     @Column(name = "currentAmount", nullable = false)
     private Float currentAmount;
+
+    @Column(name = "story", nullable = true, columnDefinition = "text")
+    private String story;
+
+    @Column(name = "moderation_notes", nullable = true, columnDefinition = "text")
+    private String moderationNotes;
+
+    @ElementCollection
+    @CollectionTable(
+            name = "youtube_links",
+            joinColumns=@JoinColumn(name = "fundraising_project_id", referencedColumnName = "fundraising_project_id")
+    )
+    @Column(name="youtube_link")
+    private List<String> youtubeLinks;
+
+    @ElementCollection
+    @CollectionTable(
+            name = "tags",
+            joinColumns=@JoinColumn(name = "fundraising_project_id", referencedColumnName = "fundraising_project_id")
+    )
+    @Column(name="tag")
+    private List<String> tags;
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
+    public List<String> getYoutubeLinks() {
+        return youtubeLinks;
+    }
+
+    public void setYoutubeLinks(List<String> youtubeLinks) {
+        this.youtubeLinks = youtubeLinks;
+    }
+
+    public String getStory() {
+        return story;
+    }
+
+    public void setStory(String story) {
+        this.story = story;
+    }
+
+    public String getModerationNotes() {
+        return moderationNotes;
+    }
+
+    public void setModerationNotes(String moderationNotes) {
+        this.moderationNotes = moderationNotes;
+    }
 
     public List<Investment> getInvestments() {
         return investments;
