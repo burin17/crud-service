@@ -21,6 +21,17 @@ public class Investment {
     @Column(name = "eth_amount")
     private Float ethAmount;
 
+    @Column(name = "from_ethereum_address", nullable = true)
+    private String fromEthereumAddress;
+
+    public String getFromEthereumAddress() {
+        return fromEthereumAddress;
+    }
+
+    public void setFromEthereumAddress(String fromEthereumAddress) {
+        this.fromEthereumAddress = fromEthereumAddress;
+    }
+
     public Float getEthAmount() {
         return ethAmount;
     }

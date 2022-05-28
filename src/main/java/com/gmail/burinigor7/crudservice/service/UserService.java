@@ -1,6 +1,8 @@
 package com.gmail.burinigor7.crudservice.service;
 
+import com.gmail.burinigor7.crudservice.domain.Investment;
 import com.gmail.burinigor7.crudservice.domain.User;
+import com.gmail.burinigor7.crudservice.repository.FundraisingProjectRepository;
 import com.gmail.burinigor7.crudservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,17 +11,21 @@ import org.springframework.stereotype.Controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 public class UserService {
     private final UserRepository userRepository;
+    private final FundraisingProjectRepository fundraisingProjectRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserService(UserRepository userRepository,
+                       FundraisingProjectRepository fundraisingProjectRepository,
                        PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.fundraisingProjectRepository = fundraisingProjectRepository;
     }
 
     public User user(Long id) {
